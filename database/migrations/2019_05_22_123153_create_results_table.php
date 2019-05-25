@@ -21,25 +21,25 @@ class CreateResultsTable extends Migration
             $table->integer('election_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('election_id')
-                  ->references('id')
-                  ->on('election')
-                  ->onDelete('cascade');
+            // $table->foreign('election_id')
+            //       ->references('id')
+            //       ->on('election')
+            //       ->onDelete('cascade');
 
-            $table->foreign('position_id')
-                  ->references('id')
-                  ->on('position')
-                  ->onDelete('cascade');                      
+            // $table->foreign('position_id')
+            //       ->references('id')
+            //       ->on('position')
+            //       ->onDelete('cascade');                      
 
-            $table->foreign('voter_id')
-                  ->references('id')
-                  ->on('voter')
-                  ->onDelete('cascade');
+            // $table->foreign('voter_id')
+            //       ->references('id')
+            //       ->on('voter')
+            //       ->onDelete('cascade');
 
-            $table->foreign('nominee_id')
-                  ->references('id')
-                  ->on('nominee')
-                  ->onDelete('cascade');
+            // $table->foreign('nominee_id')
+            //       ->references('id')
+            //       ->on('nominee')
+            //       ->onDelete('cascade');
         });
     }
 
