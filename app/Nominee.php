@@ -2,9 +2,10 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
+//use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class Nominee extends Authenticatable
+class Nominee extends Model
 {   
     public function position()
     {

@@ -43,7 +43,11 @@ class Handler extends ExceptionHandler
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
-    {
+    {   
+        if ($exception instanceof TokenMismatchException) {
+            return $this->csrfTokenExpirationHandler($request);
+        }
+        
         return parent::render($request, $exception);
     }
 
@@ -59,7 +63,28 @@ class Handler extends ExceptionHandler
         if ($request->expectsJson()) {
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
+        
+        if($exception->guards()[0] == 'web')
+        {
+            return redirect()->guest(route('admin.login'));
+        }
 
-        return redirect()->guest(route('login'));
+        return redirect(route('front.vote.login'));
+    }
+
+    protected function csrfTokenExpirationHandler($request)
+    {
+            return redirect()
+                ->back()
+                ->withInput(
+                    $request->except(
+                        'password', 
+                        'password_confirmation',
+                        '_token'
+                    )
+                )
+                ->with([
+                    'error' => 'Your form has expired. Please try again'
+                ]);
     }
 }

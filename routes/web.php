@@ -14,13 +14,12 @@ use Illuminate\Http\Request;
 */
 
 Route::get('/', function () {
-    return view('frontend.login');
+    return redirect(route('front.vote.login'));
 });
 
 Route::get('/test', function () {
     
-    $election = App\Election::find(1)->with('slots.nominees')->first();
-    return view('election',compact('election'));
+    return view('front.election');
 });
 
 Route::post('/test',function(Request $request){
@@ -29,13 +28,21 @@ Route::post('/test',function(Request $request){
 });
 
 Route::group(['namespace'=>'Front'],function(){
-    Route::get('elections','VotingController@index');
-    Route::get('vote/{election}','VotingController@show');
-    Route::post('vote/{election}','VotingController@store');
+    Route::get('vote/login','LoginController@loginForm')->name('front.vote.login');
+    Route::post('vote/login','LoginController@loginAttempt')->name('front.vote.attempt');
+    Route::post('vote/logout','LoginController@logout')->name('front.vote.logout');
+    Route::get('elections','VotingController@index')->name('front.elections.index');
+    Route::get('vote/{election}','VotingController@show')->name('front.vote.show');
+    Route::post('vote/{election}','VotingController@store')->name('front.vote.store');
 });
 
-Route::group(['namespace'=>'Admin','prefix'=>'admin'],function(){
+Route::get('admin/login','Auth\LoginController@showLoginForm')->name('admin.login');
+Route::post('admin/login','Auth\LoginController@login')->name('admin.login.attempt');
+Route::post('admin/logout','Auth\LoginController@logout')->name('admin.logout');
+
+Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>'auth:web'],function(){
     Route::get('dashboard','DashboardController@index')->name('admin.dashboard');
+    Route::get('results','ResultController@index')->name('admin.results.index');
     Route::resource('nominees','NomineeController',['as'=>'admin']);
     Route::resource('elections','ElectionController',['as'=>'admin']);
     Route::resource('positions','PositionController',['as'=>'admin']);

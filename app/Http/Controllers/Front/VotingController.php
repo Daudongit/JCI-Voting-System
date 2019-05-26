@@ -16,7 +16,7 @@ class VotingController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('auth:voter');
     }
 
     /**
@@ -25,8 +25,11 @@ class VotingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('home');
+    {   
+        $elections = Election::withCount(['results','slots'])
+            ->latest()->paginate(20);
+
+        return view('front.elections',compact('elections'));
     }
 
     public function show(Election $election)
@@ -47,5 +50,7 @@ class VotingController extends Controller
         },$selectedPositions,array_keys($selectedPositions));
 
         Result::insert($results);
+
+        return redirect(route('front.elections.index'));
     }
 }

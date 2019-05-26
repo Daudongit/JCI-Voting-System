@@ -47,10 +47,20 @@
                 </div>
             </div>
         </nav>
+        <div class="container">
+            <div class="row">
+                @include('layouts._alert')
+            </div>
+        </div>
         @yield('content')
+        @yield('modal_component')
     </div>
     <!-- Scripts -->
+    <script type="text/javascript">
+        var baseUrl = '{{url("/")}}'
+    </script>
     <script src="{{ asset('js/app.js') }}"></script>
     @stack('js')
+    <script src="{{asset('assets/js/custom.modal.js')}}"></script>
 </body>
 </html>

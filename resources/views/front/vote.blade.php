@@ -42,7 +42,8 @@
                                         @foreach ($slot->nominees as $nominee)
                                             <li class="list-group-item">
                                                 <div class="fb-user-thumb">
-                                                    <img src="/assets/image/profile-avatar.jpg" alt="">
+                                                    {{-- <img src="{{$nominee->image}}" alt=""> --}}
+                                                    <img src="https://randomuser.me/api/portraits/men/{{$loop->index+1}}.jpg" alt="">
                                                 </div>
                                                 <div class="fb-user-details">
                                                     <h3><a href="#" class="#">{{$nominee->first_name.' '.$nominee->last_name}}</a></h3>

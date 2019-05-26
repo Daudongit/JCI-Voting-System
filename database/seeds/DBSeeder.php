@@ -1,6 +1,14 @@
 <?php
 
+use App\Slot;
+use App\User;
+use App\Voter;
+use App\Result;
+use App\Nominee;
+use App\Election;
+use App\Position;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DBSeeder extends Seeder
 {   
@@ -40,6 +48,7 @@ class DBSeeder extends Seeder
         $this->results();
         $this->electionSlot();
         $this->nomineeSlot();
+        $this->admin();
         //$this->electionPosition();
     }
 
@@ -117,4 +126,12 @@ class DBSeeder extends Seeder
     //     });
     // }
 
+    private function admin()
+    {
+        User::create([
+            'name'=>'Admin',
+            'email'=>'admin@mail.com',
+            'password'=>bcrypt('password')
+        ]);
+    }
 }

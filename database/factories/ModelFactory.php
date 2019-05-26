@@ -37,7 +37,7 @@ $factory->define(App\Election::class,function(Faker\Generator $faker){
 
 $factory->define(App\Position::class,function(Faker\Generator $faker){
     return [
-        'name'=>$faker->bs,
+        'name'=>$faker->unique()->word,
     ];
 });
 
@@ -46,7 +46,7 @@ $factory->define(App\Nominee::class,function(Faker\Generator $faker){
         'first_name'=>$faker->firstName,
         'last_name'=>$faker->lastName,
         'email'=>$faker->unique()->safeEmail,
-        'image'=>$faker->image(),
+        'image'=>$faker->imageUrl(), 
         'discription'=>$faker->sentence,
         // 'position_id'=>function(){
         //     return factory(App\Position::class)->create()->id;

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Slot;
 use App\Result;
 use App\Nominee;
+use App\Election;
 use App\Position;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,13 +19,18 @@ class DashboardController extends Controller
      */
     public function index()
     {   
+        $electionCount = Election::count();
         $voteCount = Result::count();
         $slotCount = Slot::count();
         $postCount = Position::count();
         $nomineeCount = Nominee::count();
         return view(
             'admin.dashboard',
-            compact('voteCount','slotCount','postCount','nomineeCount')
+            compact(
+                'voteCount','slotCount',
+                'postCount','nomineeCount',
+                'electionCount'
+            )
         );
     }
 }

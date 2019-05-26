@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
+use App\Voter;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class LoginController extends Controller
-{
+{   
+    use ThrottlesLogins;
     /**
      * Create a new controller instance.
      *
@@ -14,7 +18,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest:voter')->except('logout');
     }
 
     /**
@@ -22,8 +26,59 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function loginForm()
     {
-        return view('home');
+        return view('front.login');
+    }
+
+    public function loginAttempt(Request $request)
+    {   
+        $this->validate($request, [
+            $this->username() => 'required|email',
+        ]);
+
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        $findUser = Voter::whereEmail($request->email)->first();
+		
+        if($findUser == null)
+		{   
+            $this->incrementLoginAttempts(request());
+            
+            return redirect(route('front.vote.login'))->with([
+                'warning'=>__('You have no permission to login')
+            ]);
+        }
+
+        $this->loginFindUser($findUser);
+
+        return redirect(route('front.elections.index'));
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::guard('voter')->logout();
+
+        $request->session()->invalidate();
+
+        return redirect(route('front.vote.attempt'));
+    }
+
+    public function username()
+    {
+        return 'email';
+    }
+
+    private function loginFindUser($findUser)
+    {
+        Auth::guard('voter')->login($findUser);
+        
+        request()->session()->regenerate();
+
+        $this->clearLoginAttempts(request());
     }
 }

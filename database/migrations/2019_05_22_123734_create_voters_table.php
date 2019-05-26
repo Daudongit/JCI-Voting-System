@@ -15,8 +15,9 @@ class CreateVotersTable extends Migration
     {
         Schema::create('voters', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('email');
+            $table->string('email')->nullable();
             $table->string('ip')->nullable();
+            $table->rememberToken();
             $table->timestamps();
         });
     }
