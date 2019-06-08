@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
 class Election extends Model
 {
     
+    protected $dates = ['end'];
+
     public function slots()
     {
         return $this->belongsToMany(Slot::class);
@@ -67,5 +69,10 @@ class Election extends Model
     public function isComingSoon()
     {
         return $this->isOpen() && Carbon::now() < $this->start;
+    }
+
+    public function isEnd()
+    {
+        return Carbon::now() > $this->end;
     }
 }

@@ -28,7 +28,7 @@
                             @empty
                                 <tr>
                                     <td colspan="5">
-                                        <div>No vote  has been found.</div>
+                                        <div class="text-center">No vote  has been found.</div>
                                     </td>
                                 </tr>
                             @endforelse

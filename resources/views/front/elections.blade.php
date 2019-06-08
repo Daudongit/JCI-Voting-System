@@ -25,8 +25,10 @@
                             <li class="list-group-item">
                                 <i class="fa fa-check"></i>
                                 Status: 
-                                @if($election->isLocked())
+                                @if($election->isEnd())
                                     <span class="label label-danger">Closed</span>
+                                @elseif($election->isLocked())
+                                    <span class="label label-danger">Locked</span>
                                 @elseif($election->isComingSoon())
                                     <span class="label label-info">Soon</span>
                                 @elseif($election->isRunning())
@@ -36,7 +38,7 @@
                         </ul>
                         <div class="panel-footer">				 
                             <a href="{{route('front.vote.show',$election->id)}}" class="btn btn-info btn-md" 
-                                {{$election->isRunning()?'':'disabled'}}>
+                                {{$election->isRunning() && !$election->isEnd()?'':'disabled'}}>
                                 ...<b>Vote</b>...
                             </a>
                         </div>

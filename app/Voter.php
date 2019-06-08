@@ -9,4 +9,13 @@ class Voter extends Authenticatable
 {
     //use Notifiable;
 
+    /**
+     * Mark the user's account as confirmed.
+     */
+    public function confirm()
+    {
+        $this->confirmation_token = null;
+
+        $this->save();
+    }
 }

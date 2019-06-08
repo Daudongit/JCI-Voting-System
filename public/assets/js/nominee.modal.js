@@ -1,13 +1,12 @@
-$modal = 'nominee'
-function editModal(inputs,content){
+$title = 'nominee'
+$url = '/admin/nominees/'
+function editModal({inputs,button}){
+    content = button.data('content')
     inputs[0].value = content.first_name
     inputs[1].value = content.last_name
     inputs[2].value = content.email
-    inputs[3].value = content.discription
+    inputs[3].value = content.description
     inputs[4].value = content.image
-    //$('.MultiFile-preview')[0].src = window.baseUrl+'/assets/image/'+'profile-avatar.jpg'
-    $('.MultiFile-preview')[0].src = content.image
-    //$('.MultiFile-title')[0].innerText = content.image+'.jpg'
+    $('.MultiFile-preview')[0].src = content.image.split('|')[0]
     $('.MultiFile-title')[0].innerText = content.image
-    //console.log(inputs)
 }

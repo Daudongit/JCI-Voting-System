@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Nominee;
 use Illuminate\Http\Request;
+use App\Services\FileUploadService;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\NomineeRequest;
 
 class NomineeController extends Controller
 {
@@ -22,57 +24,90 @@ class NomineeController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
+     *  
+     * @param  \App\Http\Requests\NomineeRequest  $request
+     * @param \App\Services\FileUploadservice $fileUploadService
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NomineeRequest $request,FileUploadService $fileUploadService)
     {
-        dd($request->all());
+        $rawNomineee = $request->except(['_token','previousImage','image']);
+
+        if ($request->hasfile('image')) {
+            $uploadResponce = $fileUploadService->uploadFile(
+                $request->file('image'),
+                ["width"=>200, "height"=>200]
+            );
+        }
+
+        $rawNomineee['image'] = $uploadResponce['public_id']?
+            $uploadResponce['secure_url'].'|'.$uploadResponce['public_id']:null;
+
+        Nominee::create($rawNomineee);
+
+        return redirect(route('admin.nominees.index'))->withSuccess(
+            __('Nominee successfully created.')
+        );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\NomineeRequest  $request
+     * @param  \App\Nominee  $nominee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
+    public function update(NomineeRequest $request, Nominee $nominee)
+    {   
+        $fileUploadService = app(FileUploadService::class);
+
+        $rawNomineee = $request->except(['_token','previousImage','image']);
+
+        if($request->hasFile('image')) {
+            $uploadResponce = $fileUploadService->uploadFile(
+                $request->image,
+                ["width"=>200, "height"=>200]
+            );
+
+            $this->deleteImage($fileUploadService,$nominee);
+        }
+
+        $rawNomineee['image'] = $uploadResponce['public_id']?
+            $uploadResponce['secure_url'].'|'.$uploadResponce['public_id']:null;
+            
+        $nominee->update($rawNomineee);
+
+        return redirect(route('admin.nominees.index'))->withSuccess(
+            __('Nominee successfully updated.')
+        );
     }
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
+     * @param \App\Services\FileUploadservice $fileUploadService
+     * @param  \App\Nominee  $nominee
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(FileUploadService $fileUploadService, Nominee $nominee)
     {
-        //
+        if($nominee->delete())
+        {
+            $this->deleteImage($fileUploadService,$nominee);
+
+            return redirect(route('admin.nominees.index'))->withSuccess(
+                __('Nominee successfully deleted.')
+            );
+        }
+    }
+
+    private function deleteImage($fileUploadService,$nominee)
+    {
+        if(!is_null($nominee->image)) {
+            $fileUploadService->deleteFile(
+                isset(explode('|',$nominee->image)[1])?
+                explode('|',$nominee->image)[1]:null
+            );
+        }
     }
 }

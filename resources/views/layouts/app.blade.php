@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/font-awesome/css/font-awesome.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/sweetalert.css')}}"> 
     <link href="{{ asset('assets/css/custom.css') }}" rel="stylesheet">
     @stack('css')
 </head>
@@ -62,5 +63,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     @stack('js')
     <script src="{{asset('assets/js/custom.modal.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/sweetalert.min.js')}}"></script>
+    <script type="text/javascript" src="{{asset('assets/js/sweetalert_init.js')}}"></script>
 </body>
 </html>

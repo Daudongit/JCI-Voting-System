@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Nominee Possible Post</div>
+                    <div class="panel-heading">Nominee Possible Category</div>
                     <div class="panel-body">
                         <table class="table table-striped">
                             <thead>
@@ -22,22 +22,31 @@
                                     <td scope="row">{{ $position->id }}</td>
                                     <td>{{$position->name}}</td>
                                     <td>
-                                        <a class="btn btn-info btn-sm" href="">
+                                        <a class="btn btn-info btn-sm" href="#modalComponet" 
+                                            data-toggle="modal" data-action="Edit" 
+                                            data-content="{{$position->toJson()}}">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin.positions.destroy', $position->id) }}" method="POST">
+                                        <form action="{{ route('admin.positions.destroy', $position->id) }}" method="POST"
+                                            id="delete_{{$position->id}}">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
-                                            <button type="submit" class="btn btn-danger btn-sm">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="
+                                                    event.preventDefault();
+                                                    sweet_alert(()=>{
+                                                        document.getElementById('delete_{{$position->id}}').submit();  
+                                                    }
+                                                );">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </button>
                                         </form>
                                     </td>
                                     @if($loop->index == 0)
                                         <td>
-                                            <a class="btn btn-success btn-sm" href="">
+                                            <a class="btn btn-success btn-sm" href="#modalComponet" 
+                                                data-toggle="modal" data-action="Create">
                                                 <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                             </a>
                                         </td>
@@ -51,8 +60,14 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="5">
-                                        <div>No nominee post has been found. Try to add one <a href="">Now</a></div>
+                                    <td colspan="4">
+                                        <div class="text-center">No nominee post has been found. Try to add one</div>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="#modalComponet" 
+                                            data-toggle="modal" data-action="Create">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforelse
@@ -64,3 +79,16 @@
         </div>
     </div>
 @endsection
+@section('modal_component')
+	@component('components.modal')
+		@slot('modalTitle','Create Category')
+		@slot('modalFormAction',route('admin.positions.store'))
+		@slot('modalBody')
+            <label for="name" class="control-label"> Name:</label>
+			<input type="text" class="form-control" id="name" name="name"/>
+		@endslot
+	@endcomponent
+@endsection
+@push('js')
+    <script type="text/javascript" src="{{asset('assets/js/position.modal.js')}}"></script>
+@endpush

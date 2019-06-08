@@ -13,8 +13,21 @@ class Slot extends Model
         return $this->belongsToMany(Nominee::class);
     }
 
+    public function nomineesWithResultCount($electionId)
+    {
+        return $this->nominees()->withCount(
+            [
+                'results'=>function($query)use($electionId){
+                    $query->where('election_id',$electionId);
+                }
+            ]
+        )->get();
+    }
+
     public function position()
     {
         return $this->belongsTo(Position::class);
     }
+
 }
+

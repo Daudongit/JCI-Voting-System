@@ -17,22 +17,16 @@ Route::get('/', function () {
     return redirect(route('front.vote.login'));
 });
 
-Route::get('/test', function () {
-    
-    return view('front.election');
-});
-
-Route::post('/test',function(Request $request){
-    
-    //dd($results);
-});
 
 Route::group(['namespace'=>'Front'],function(){
     Route::get('vote/login','LoginController@loginForm')->name('front.vote.login');
-    Route::post('vote/login','LoginController@loginAttempt')->name('front.vote.attempt');
+    Route::post('vote/login','LoginController@loginAttempt')
+        ->middleware('isVotable')->name('front.vote.attempt');
+    Route::get('vote/login/confirm','LoginController@loginForm')->name('front.vote.login');
     Route::post('vote/logout','LoginController@logout')->name('front.vote.logout');
     Route::get('elections','VotingController@index')->name('front.elections.index');
-    Route::get('vote/{election}','VotingController@show')->name('front.vote.show');
+    Route::get('vote/{election}','VotingController@show')
+        ->middleware('hasVoted')->name('front.vote.show');
     Route::post('vote/{election}','VotingController@store')->name('front.vote.store');
 });
 
@@ -43,9 +37,10 @@ Route::post('admin/logout','Auth\LoginController@logout')->name('admin.logout');
 Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>'auth:web'],function(){
     Route::get('dashboard','DashboardController@index')->name('admin.dashboard');
     Route::get('results','ResultController@index')->name('admin.results.index');
-    Route::resource('nominees','NomineeController',['as'=>'admin']);
-    Route::resource('elections','ElectionController',['as'=>'admin']);
-    Route::resource('positions','PositionController',['as'=>'admin']);
+    Route::get('results/{election}','ResultController@show')->name('admin.results.show');
+    Route::resource('nominees','NomineeController',['as'=>'admin','except'=>['create','edit']]);
+    Route::resource('elections','ElectionController',['as'=>'admin','except'=>['create','edit','show']]);
+    Route::resource('positions','PositionController',['as'=>'admin','except'=>['create','edit']]);
     Route::resource('slots','SlotController',['as'=>'admin']);
     Route::patch('elections/toggle/{election}','ElectionController@toggle')->name('admin.elections.toggle');
 });

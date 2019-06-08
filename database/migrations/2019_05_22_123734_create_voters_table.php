@@ -17,6 +17,7 @@ class CreateVotersTable extends Migration
             $table->increments('id');
             $table->string('email')->nullable();
             $table->string('ip')->nullable();
+            $table->string('confirmation_token', 25)->nullable()->unique();
             $table->rememberToken();
             $table->timestamps();
         });

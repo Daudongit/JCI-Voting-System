@@ -21,68 +21,65 @@ class PositionController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Position $position)
     {
-        //
+        $this->validate(
+            $request,
+            ['name'=>'required|string|min:3']
+        );
+        
+        $position->name = $request->name;
+
+        $position->save();
+
+        return redirect(route('admin.positions.index'))->withSuccess(
+            __('Position successfully created.')
+        );
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Position $position)
     {
-        //
+        $this->validate(
+            $request,
+            ['name'=>'required|string|min:3']
+        );
+        
+        $position->name = $request->name;
+
+        $position->save();
+
+        return redirect(route('admin.positions.index'))->withSuccess(
+            __('Position successfully updated.')
+        );
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy(Position $position)
+    {   
+        if($position->delete())
+        {
+            return redirect(route('admin.positions.index'))->withSuccess(
+                __('Position successfully deleted.')
+            );
+        }
     }
 }

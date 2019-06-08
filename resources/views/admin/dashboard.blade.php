@@ -22,8 +22,8 @@
                             <div class="m-b-md">
                                 <i class="fa fa-sitemap fa-4x"></i>
                                 <h1 class="m-xs">{{$voteCount.'/'.$electionCount}}</h1>
-                                <h3 class="font-bold no-margins">Vote/Election</h3>
-                                <small>Number of election</small>
+                                <h3 class="font-bold no-margins">Vote/Year</h3>
+                                <small>Number of votes in years</small>
                             </div>
                         </div> 
                     </div>
@@ -32,8 +32,8 @@
                             <div class="m-b-md">
                                 <i class="fa fa-pencil-square-o fa-4x"></i>
                                 <h1 class="m-xs">{{$postCount}}</h1>
-                                <h3 class="font-bold no-margins">Post</h3>
-                                <small>Number of post for nominee</small>
+                                <h3 class="font-bold no-margins">Category</h3>
+                                <small>Number of category for nominee</small>
                             </div>
                         </div>
                     </div>

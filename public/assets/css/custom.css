@@ -1,3 +1,6 @@
 .level{display:flex; justify-content:space-between}
 .level a{margin-right: .4em;}
 .ml04 { margin-left: .4em; }
+.select2-container{
+    width: 100%!important
+}

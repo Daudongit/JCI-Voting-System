@@ -6,9 +6,11 @@ use App\Voter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
 
 class LoginController extends Controller
 {   
+    use ThrottlesLogins;
     /**
      * Create a new controller instance.
      *
@@ -31,15 +33,28 @@ class LoginController extends Controller
 
     public function loginAttempt(Request $request)
     {   
-        // $this->validate($request, [
-        //     $this->username() => 'required|email',
-        // ]);
+        $this->validate($request, [
+            $this->username() => 'required|email',
+        ]);
+
+        if ($this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
 
         $findUser = Voter::whereEmail($request->email)->first();
-        
-        Auth::guard('voter')->login($findUser);
-        
-        request()->session()->regenerate();
+		
+        if($findUser == null)
+		{   
+            $this->incrementLoginAttempts(request());
+            
+            return redirect(route('front.vote.login'))->with([
+                'warning'=>__('You have no permission to login')
+            ]);
+        }
+
+        $this->loginFindUser($findUser);
 
         return redirect(route('front.elections.index'));
     }
@@ -51,6 +66,21 @@ class LoginController extends Controller
         $request->session()->invalidate();
 
         return redirect(route('front.vote.login'));
+        //return redirect(route('front.vote.attempt'));
+    }
+
+    public function username()
+    {
+        return 'email';
+    }
+
+    private function loginFindUser($findUser)
+    {
+        Auth::guard('voter')->login($findUser);
+        
+        request()->session()->regenerate();
+
+        $this->clearLoginAttempts(request());
     }
 
     public function confirmation()

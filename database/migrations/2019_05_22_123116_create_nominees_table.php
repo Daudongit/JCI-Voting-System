@@ -19,7 +19,7 @@ class CreateNomineesTable extends Migration
             $table->string('last_name', 60);
             $table->string('email');
             $table->string('image')->nullable();
-            $table->text('discription')->nullable();
+            $table->text('description')->nullable();
             //$table->integer('position_id')->unsigned();
             $table->timestamps();
         });

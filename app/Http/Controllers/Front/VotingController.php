@@ -27,7 +27,7 @@ class VotingController extends Controller
     public function index()
     {   
         $elections = Election::withCount(['results','slots'])
-            ->latest()->paginate(20);
+            ->oldest('start')->paginate(20);
 
         return view('front.elections',compact('elections'));
     }

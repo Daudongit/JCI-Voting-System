@@ -18,7 +18,9 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            return (is_null($guard) || $guard == 'web')?
+                redirect(route('admin.dashboard')):
+                redirect(route('front.elections.index'));
         }
 
         return $next($request);

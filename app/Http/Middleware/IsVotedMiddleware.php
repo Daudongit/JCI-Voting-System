@@ -17,16 +17,17 @@ class IsVotedMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Result::where('voter_id', Auth::id())->count() > 0) 
-            // return response()->json([
-            //     'status' => 'failed',
-            //     'message' => 'You can only vote once.'
-            // ]);
-            
-            return redirect('front.login')->with([
-                'flash'=>__('You can only vote once.')
-            ]);
+        if (Result::where('voter_id', Auth::guard('voter')->id())->count() > 0)
+        {   
+            Auth::guard('voter')->logout();
 
+            $request->session()->invalidate();
+
+            return redirect(route('front.vote.login'))->withWarning(
+                __('You can only vote once.')
+            );
+        } 
+            
         return $next($request);
     }
 }

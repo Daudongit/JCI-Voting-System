@@ -8,13 +8,13 @@
             <a href="{{ route('admin.nominees.index') }}">Nominee</a>
         </li>
         <li class="{{ active(route('admin.positions.index'))}}">
-            <a href="{{ route('admin.positions.index') }}">Post</a>
+            <a href="{{ route('admin.positions.index') }}">Category</a>
         </li>
         <li class="{{active(route('admin.slots.index'))}}">
             <a href="{{ route('admin.slots.index') }}">Slot</a>
         </li>
         <li class="{{active(route('admin.elections.index'))}}">
-            <a href="{{ route('admin.elections.index') }}">Election</a>
+            <a href="{{ route('admin.elections.index') }}">Year</a>
         </li>
         <li class="{{active(route('admin.results.index'))}}">
             <a href="{{ route('admin.results.index') }}">Vote</a>

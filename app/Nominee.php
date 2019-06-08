@@ -7,8 +7,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Nominee extends Model
 {   
+    protected $fillable = [
+        'first_name','last_name',
+        'email','discription','image'
+    ];
+
     public function position()
     {
         return $this->belongsTo(Position::class);
     }
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
+
 }

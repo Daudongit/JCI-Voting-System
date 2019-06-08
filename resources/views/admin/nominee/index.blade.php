@@ -32,10 +32,16 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <form action="{{ route('admin.nominees.destroy', $nominee->id) }}" method="POST">
+                                        <form action="{{ route('admin.nominees.destroy', $nominee->id) }}" method="POST"
+                                            id="delete_{{$nominee->id}}">
                                             {{ csrf_field() }}
                                             {{ method_field('DELETE') }}
-                                            <button type="submit" class="btn btn-danger btn-sm">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="
+                                                    event.preventDefault();
+                                                    sweet_alert(()=>{
+                                                        document.getElementById('delete_{{$nominee->id}}').submit();  
+                                                    }
+                                                );">
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                             </button>
                                         </form>
@@ -57,8 +63,14 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6">
-                                        <div>No nominee has been found. Try to add one <a href="">Now</a></div>
+                                    <td colspan="5">
+                                        <div class="text-center">No nominee has been found. Try to add one </div>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="#modalComponet" 
+                                            data-toggle="modal" data-action="Create">
+                                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                        </a>
                                     </td>
                                 </tr>
                             @endforelse
@@ -73,7 +85,7 @@
 @section('modal_component')
 	@component('components.modal')
 		@slot('modalTitle','Create Nominee')
-		@slot('modalFormAction','/nominees')
+		@slot('modalFormAction',route('admin.nominees.store'))
 		@slot('modalBody')
 			<label for="recipient-name" class="control-label">First Name:</label>
 			<input type="text" class="form-control" id="first_name" name="first_name">

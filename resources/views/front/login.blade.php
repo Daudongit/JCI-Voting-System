@@ -5,6 +5,11 @@
 @section('content')
     <div class="container">
         <div class="row">
+            @include('layouts._alert')
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="login-form">
                     <form action="{{route('front.vote.attempt')}}" method="post">
