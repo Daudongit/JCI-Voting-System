@@ -46,7 +46,7 @@
                 </div>
                 <!-- /item -->
             @empty
-                <p>No  election  has been found. </p>
+                <p class="text-center"><strong>No  election  has been found. </strong></p>
             @endforelse
             {{$elections->render()}}
         </div>

@@ -22,7 +22,7 @@ Route::group(['namespace'=>'Front'],function(){
     Route::get('vote/login','LoginController@loginForm')->name('front.vote.login');
     Route::post('vote/login','LoginController@loginAttempt')
         ->middleware('isVotable')->name('front.vote.attempt');
-    Route::get('vote/login/confirm','LoginController@loginForm')->name('front.vote.login');
+    Route::get('vote/login/confirm','LoginController@confirmation')->name('front.login.confirm');
     Route::post('vote/logout','LoginController@logout')->name('front.vote.logout');
     Route::get('elections','VotingController@index')->name('front.elections.index');
     Route::get('vote/{election}','VotingController@show')

@@ -19,18 +19,20 @@ class IsVotableMiddleware
      */
     public function handle($request, Closure $next)
     {   
-        if(!Voter::where('email',$request->email)->exits())
+        if(filter_var($request->email, FILTER_VALIDATE_EMAIL) === false)
+        {   
+            return redirect(route('front.vote.login'))->withWarning(
+                __('Please enter a valid email address')
+            );
+        }
+
+        if(!Voter::where('email',$request->email)->exists())
         {
-            $voter = Voter::create([
-                'email'=>$request->email,
-                'confirmation_token' => str_limit(
-                    md5($request->email . str_random()), 25, ''
-                )
-            ]);
+            $voter = $this->createVoter($request);
 
             Mail::to($voter)->send(new PleaseConfirmYourEmail($voter));
 
-            return redirect(route('front.vote.login'))->withStatus(
+            return redirect(route('front.vote.login'))->withSuccess(
                 __(
                     'A confirmation link has been send to your email.
                     please confirm your account to complete the voting'
@@ -41,5 +43,15 @@ class IsVotableMiddleware
         {
             return $next($request);
         }
+    }
+
+    private function createVoter($request)
+    {
+        return Voter::create([
+            'email'=>$request->email,
+            'confirmation_token' => str_limit(
+                md5($request->email . str_random()), 25, ''
+            )
+        ]);
     }
 }

@@ -9,6 +9,7 @@ class Voter extends Authenticatable
 {
     //use Notifiable;
 
+    protected $fillable = ['email','confirmation_token'];
     /**
      * Mark the user's account as confirmed.
      */

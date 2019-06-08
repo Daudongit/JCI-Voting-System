@@ -1,5 +1,5 @@
 @if(session()->has('success') || session()->has('warning'))
-    <div class="alert alert-{{session('warning')?'warning':'success'}} alert-dismissible" role="alert">
+    <div class="alert alert-{{session('warning')?'warning':'success'}} alert-dismissible text-center" role="alert">
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -9,7 +9,7 @@
 
 
 @if($errors->any())
-    <div class="alert alert-danger" alert-dismissible role="alert">
+    <div class="alert alert-danger text-center" alert-dismissible role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
