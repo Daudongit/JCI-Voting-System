@@ -9,7 +9,7 @@ class Nominee extends Model
 {   
     protected $fillable = [
         'first_name','last_name',
-        'email','discription','image'
+        'email','description','image'
     ];
 
     public function position()

@@ -35,7 +35,8 @@ class DbRealSeeder extends Seeder
                 factory(App\Nominee::class)->create([
                     'first_name'=>$name['first_name'],
                     'last_name'=>$name['last_name'],
-                    'description'=>$nomineeItem['desc']
+                    'description'=>$nomineeItem['desc'],
+                    'image'=>null
                 ]);
             });
         });

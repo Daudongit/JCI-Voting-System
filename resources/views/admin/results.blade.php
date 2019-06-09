@@ -21,8 +21,14 @@
             <div class="col-md-12">
                 @forelse ($slots as $slot)
                     <div class="panel panel-default">
-                        <div class="panel-heading level" style="">
+                        <div class="panel-heading level" >
                             <span>{{$slot->position->name}}</span>
+                            <div class="level">
+                                <a class="btn btn-info btn-sm ml04" 
+                                    href="{{route('admin.results.export',[$election->id,$slot->id])}}">
+                                    <i class="fa fa-file-text" aria-hidden="true"></i>
+                                </a>
+                            </div>
                         </div>
                         <div class="panel-body">
                             <table class="table table-striped">

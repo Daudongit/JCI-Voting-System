@@ -38,10 +38,10 @@ class NomineeController extends Controller
                 $request->file('image'),
                 ["width"=>200, "height"=>200]
             );
-        }
 
-        $rawNomineee['image'] = $uploadResponce['public_id']?
-            $uploadResponce['secure_url'].'|'.$uploadResponce['public_id']:null;
+            $rawNomineee['image'] = $uploadResponce['secure_url'].'|'.
+                $uploadResponce['public_id'];
+        }
 
         Nominee::create($rawNomineee);
 
@@ -59,7 +59,7 @@ class NomineeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(NomineeRequest $request, Nominee $nominee)
-    {   
+    {  
         $fileUploadService = app(FileUploadService::class);
 
         $rawNomineee = $request->except(['_token','previousImage','image']);
@@ -71,10 +71,10 @@ class NomineeController extends Controller
             );
 
             $this->deleteImage($fileUploadService,$nominee);
-        }
 
-        $rawNomineee['image'] = $uploadResponce['public_id']?
-            $uploadResponce['secure_url'].'|'.$uploadResponce['public_id']:null;
+            $rawNomineee['image'] = $uploadResponce['secure_url'].'|'.
+                $uploadResponce['public_id'];
+        }
             
         $nominee->update($rawNomineee);
 
