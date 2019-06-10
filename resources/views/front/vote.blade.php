@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="panel-body">
-                    <form method="POST" action="/test" id="default">
+                    <form method="POST" action="{{route('front.vote.store',$election->id)}}" id="default">
                         {{csrf_field()}}
                         <input type="hidden" name="election" value="{{$election->id}}">
                         @foreach ($election->slots as $slot)
@@ -42,12 +42,14 @@
                                         @foreach ($slot->nominees as $nominee)
                                             <li class="list-group-item">
                                                 <div class="fb-user-thumb">
-                                                    {{-- <img src="{{$nominee->image}}" alt=""> --}}
-                                                    <img src="https://randomuser.me/api/portraits/men/{{$loop->index+1}}.jpg" alt="">
+                                                    {{-- <img src="https://randomuser.me/api/portraits/men/{{$loop->index+1}}.jpg" alt=""> --}}
+                                                    <img 
+                                                        src="{{is_null($nominee->image)?'/assets/image/no_image.jpg':explode('|',$nominee->image)[0]}}" 
+                                                        alt="{{$nominee->first_name}}">
                                                 </div>
                                                 <div class="fb-user-details">
                                                     <h3><a href="#" class="#">{{$nominee->first_name.' '.$nominee->last_name}}</a></h3>
-                                                    <p>for {{$slot->position->name}}</p>
+                                                    <p>{{$nominee->description}}</p>
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <p class="fb-user-status">{{$nominee->discription}}</p>

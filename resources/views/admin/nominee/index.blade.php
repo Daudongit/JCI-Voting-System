@@ -14,7 +14,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Name</th>
-                                    <th>Email</th>
+                                    <th>Profile</th>
                                     <th>Edit</th>
                                     <th>Remove</th>
                                     <th>Add</th>
@@ -24,7 +24,7 @@
                                 <tr>
                                     <td scope="row">{{ $nominee->id }}</td>
                                     <td>{{$nominee->first_name.' '.$nominee->last_name}}</td>
-                                    <td>{{$nominee->email}}</td>
+                                    <td>{{$nominee->description}}</td>
                                     <td>
                                         <a class="btn btn-info btn-sm" href="#modalComponet" data-toggle="modal"
                                             data-action="Edit" data-content="{{$nominee->toJson()}}">

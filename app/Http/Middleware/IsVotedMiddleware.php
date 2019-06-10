@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Result;
+use App\Ipvalidation;
 use Illuminate\Support\Facades\Auth;
 
 class IsVotedMiddleware
@@ -17,7 +18,7 @@ class IsVotedMiddleware
      */
     public function handle($request, Closure $next)
     {
-        if (Result::where('voter_id', Auth::guard('voter')->id())->count() > 0)
+        if ($this->conditions($request))
         {   
             Auth::guard('voter')->logout();
 
@@ -32,7 +33,16 @@ class IsVotedMiddleware
     }
 
     private function conditions($request)
-    {
-        
+    {   
+        return (Result::where(
+            'voter_id', Auth::guard('voter')->id()
+            )->count() > 0
+        ) ||
+        Ipvalidation::where(
+            [
+                ['ip','=',$request->ip()],
+                ['election_id','=',$request->route('election')->id]
+            ]
+        )->exists();
     }
 }

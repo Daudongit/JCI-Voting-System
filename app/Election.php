@@ -28,7 +28,7 @@ class Election extends Model
      */
     public function isLocked()
     {   
-        return $this->status === 1;
+        return $this->status === 0;
     }
 
     /*

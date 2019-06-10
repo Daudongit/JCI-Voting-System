@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Front;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Election;
 use App\Result;
+use App\Election;
+use App\Ipvalidation;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class VotingController extends Controller
 {
@@ -37,9 +38,10 @@ class VotingController extends Controller
         return view('front.vote',compact('election'));
     }
 
-    public function store($election)
-    {
-        $selectedPositions = $request->except('_token');
+    public function store(Request $request,$election)
+    {   
+        $selectedPositions = $request->except(['_token','election']);
+        
         $results = array_map(function($selectedNominee,$position)use($election){
             return [
                 'voter_id'=>1,
@@ -48,9 +50,16 @@ class VotingController extends Controller
                 'election_id'=>$election
             ];
         },$selectedPositions,array_keys($selectedPositions));
+       
+        \DB::transaction(function()use($election,$results,$request){
+            Result::insert($results);
 
-        Result::insert($results);
-
+            Ipvalidation::create([
+                'ip'=>$request->ip(),
+                'election_id'=>$election
+            ]);
+        });
+        
         return redirect(route('front.elections.index'));
     }
 }

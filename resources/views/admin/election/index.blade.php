@@ -68,7 +68,7 @@
                                         </form>
                                     </td>
                                     <td>
-                                        @php $fa = $election->isLocked()? 'fa fa-unlock': 'fa fa-lock' @endphp
+                                        @php $fa = $election->isLocked()? 'fa fa-lock': 'fa fa-unlock' @endphp
                                         <form action="{{ route('admin.elections.toggle', $election->id) }}" method="POST">
                                             {{ csrf_field() }}
                                             {{ method_field('PATCH') }}

@@ -58,7 +58,6 @@ class IsVotableMiddleware
 
         return Voter::create([
             'email'=>$request->email,
-            'ip'=>$request->ip(),
             'confirmation_token' => str_limit(
                 md5($request->email . str_random()), 25, ''
             )
