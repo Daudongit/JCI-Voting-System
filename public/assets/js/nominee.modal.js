@@ -1,5 +1,4 @@
 $title = 'nominee'
-$url = '/admin/nominees/'
 function editModal({inputs,button}){
     const content = button.data('content')
     const image = content.image?content.image.split('|')[0]: 

@@ -1,5 +1,4 @@
 $title = 'election'
-$url = '/admin/elections/'
 function editModal({inputs,button}){
     const content = button.data('content')
     const slots = content.slots.map((slot)=>slot.id)

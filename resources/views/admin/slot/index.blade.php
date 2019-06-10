@@ -111,6 +111,9 @@
 	@endcomponent
 @endsection
 @push('js')
+    <script type="text/javascript">
+        const $realUrl = "{{route('admin.slots.store')}}"
+    </script>
     <script type="text/javascript" src="{{asset('assets/js/select2.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/select2_init.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/slot.modal.js')}}"></script>

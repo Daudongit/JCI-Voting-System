@@ -161,7 +161,10 @@
 	@endcomponent
 @endsection
 @push('js')
-<script type="text/javascript" src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script type="text/javascript">
+        const $realUrl = "{{route('admin.elections.store')}}"
+    </script>
+    <script type="text/javascript" src="{{asset('assets/js/bootstrap-datetimepicker.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/select2.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/election.modal.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/select2_init.js')}}"></script>

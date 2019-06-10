@@ -120,6 +120,9 @@
 	@endcomponent
 @endsection
 @push('js')
+    <script type="text/javascript">
+        const $realUrl = "{{route('admin.nominees.store')}}"
+    </script>
     <script type="text/javascript" src="{{asset('assets/js/jQuery.MultiFile.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/MultiFileUpload.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/nominee.modal.js')}}"></script>

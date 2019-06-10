@@ -1,5 +1,5 @@
 $title = 'slot'
-$url = '/admin/slots/'
+//$url = '/admin/slots/'
 function editModal({selects,button}){
     const content = button.data('content')
     const position = content.position.id
