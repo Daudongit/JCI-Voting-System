@@ -42,7 +42,7 @@
                                         @elseif($election->isComingSoon())
                                             <span class="label label-info">Soon</span>
                                         @elseif($election->isRunning())
-                                            <span class="label label-success">Started</span>
+                                            <span class="label label-success">Ongoing</span>
                                         @endif
                                     </td>
                                     <td>
