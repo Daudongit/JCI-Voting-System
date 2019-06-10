@@ -37,9 +37,11 @@ class PleaseConfirmYourEmail extends Mailable
     {   
         $voter = $this->voter;
 
-        return $this->markdown(
-            'emails.confirm_email',
-            compact('voter')
-        );
+        return $this->from('info@jci.com', 'President')
+            ->subject('Please Confirm Your Email To Complete The Voting Process')
+            ->markdown(
+                'emails.confirm_email',
+                compact('voter')
+            );
     }
 }
