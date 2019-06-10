@@ -20,7 +20,7 @@
                             @forelse ($results as $result)
                                 <tr>
                                     <td scope="row">{{ $result->id }}</td>
-                                    <td>voter</td>
+                                    <td>{{$result->voter}}</td>
                                     <td>{{$result->post}}</td>
                                     <td>{{$result->nominee}}</td>
                                     <td>{{$result->election}}</td>

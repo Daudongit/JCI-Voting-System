@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {   
+    
+    public function getVoterAttribute()
+    {
+        return Voter::find($this->voter_id)->email;
+    }
+    
     public function getPostAttribute()
     {
         return Position::find($this->position_id)->name;

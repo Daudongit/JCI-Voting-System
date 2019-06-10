@@ -15,13 +15,18 @@
                         <div class="panel-body text-center">
                             <p>Start Date:
                                 <strong>
-                                    {{$election->created_at->toDayDateTimeString()}}
+                                    {{$election->start->toDayDateTimeString()}}
+                                </strong>
+                            </p>
+                            <p>End Date:
+                                <strong>
+                                    {{$election->end->toDayDateTimeString()}}
                                 </strong>
                             </p>
                         </div>
                         <ul class="list-group text-center">
                             <li class="list-group-item"><i class="fa fa-check"></i>Number of Slot: {{$election->slots_count}}		                            </li>
-                            <li class="list-group-item"><i class="fa fa-check"></i>Votes count: {{$election->results_count}}		                            </li>
+                            {{-- <li class="list-group-item"><i class="fa fa-check"></i>Votes count: {{$election->results_count}}		                            </li> --}}
                             <li class="list-group-item">
                                 <i class="fa fa-check"></i>
                                 Status: 

@@ -34,7 +34,7 @@ class ResultController extends Controller
     public function export($election,Slot $slot,$type = 'xls')
     {
         $nomineesResults = $slot->nomineesWithResultCount($election);
-        //dd($this->transformCollection($nomineesResults->toArray()));
+        
         $title = "jci_yearly_{$slot->position->name}_selection";
         
         return Excel::create($title, function($excel) use ($slot,$nomineesResults) {

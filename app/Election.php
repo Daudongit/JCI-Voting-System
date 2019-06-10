@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Election extends Model
 {
     
-    protected $dates = ['end'];
+    protected $dates = ['start','end'];
 
     public function slots()
     {

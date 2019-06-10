@@ -2,6 +2,7 @@
 @push('css')
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.stepy.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/fbwall.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/readmore.css') }}">
 @endpush
 @section('content')
 <div class="container">
@@ -49,7 +50,7 @@
                                                 </div>
                                                 <div class="fb-user-details">
                                                     <h3><a href="#" class="#">{{$nominee->first_name.' '.$nominee->last_name}}</a></h3>
-                                                    <p>{{$nominee->description}}</p>
+                                                    <p class="more">{{$nominee->description}}</p>
                                                 </div>
                                                 <div class="clearfix"></div>
                                                 <p class="fb-user-status">{{$nominee->discription}}</p>
@@ -81,16 +82,6 @@
 @endsection
 @push('js')
     <script src="{{ asset('assets/js/jquery.stepy.js') }}"></script>
-    <script>
-        //step wizard
-        $(function() {
-            $('#default').stepy({
-                backLabel: 'Previous',
-                block: true,
-                nextLabel: 'Next',
-                titleClick: true,
-                titleTarget: '.stepy-tab'
-            });
-        });
-    </script>
+    <script src="{{ asset('assets/js/stepy_form_wizard_init.js') }}"></script>
+    <script src="{{ asset('assets/js/readmore.js') }}"></script>
 @endpush
