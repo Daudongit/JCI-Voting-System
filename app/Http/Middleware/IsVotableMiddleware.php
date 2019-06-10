@@ -26,7 +26,7 @@ class IsVotableMiddleware
             );
         }
 
-        if(!Voter::where('email',$request->email)->exists())
+        if($this->condition($request))
         {
             $voter = $this->createVoter($request);
 
@@ -45,10 +45,20 @@ class IsVotableMiddleware
         }
     }
 
-    private function createVoter($request)
+    private function condition($request)
     {
+       return !Voter::where('email',$request->email)->exists() ||
+            !is_null(Voter::where('email',$request->email)->first()
+                ->confirmation_token);
+    }
+
+    private function createVoter($request)
+    {   
+        Voter::where('email',$request->email)->delete();
+
         return Voter::create([
             'email'=>$request->email,
+            'ip'=>$request->ip(),
             'confirmation_token' => str_limit(
                 md5($request->email . str_random()), 25, ''
             )

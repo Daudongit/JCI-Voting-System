@@ -90,5 +90,8 @@
 	@endcomponent
 @endsection
 @push('js')
+    <script type="text/javascript">
+         const $realUrl = "{{route('admin.positions.store')}}"
+    </script>
     <script type="text/javascript" src="{{asset('assets/js/position.modal.js')}}"></script>
 @endpush
