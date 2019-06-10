@@ -30,4 +30,9 @@ class IsVotedMiddleware
             
         return $next($request);
     }
+
+    private function conditions($request)
+    {
+        
+    }
 }

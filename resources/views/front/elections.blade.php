@@ -37,10 +37,12 @@
                             </li>
                         </ul>
                         <div class="panel-footer">				 
-                            <a href="{{route('front.vote.show',$election->id)}}" class="btn btn-info btn-md" 
+                            <button  
+                                onClick="window.location.href='{{route('front.vote.show',$election->id)}}'" 
+                                class="btn btn-info btn-md" 
                                 {{$election->isRunning() && !$election->isEnd()?'':'disabled'}}>
                                 ...<b>Vote</b>...
-                            </a>
+                            </button> 
                         </div>
                     </div>
                 </div>
