@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/MultiFileUpload.css')}}"> 
+    <link rel="stylesheet" href="{{ asset('assets/css/readmore.css') }}">
 @endpush
 @section('content')
     <div class="container">
@@ -24,7 +25,7 @@
                                 <tr>
                                     <td scope="row">{{ $nominee->id }}</td>
                                     <td>{{$nominee->first_name.' '.$nominee->last_name}}</td>
-                                    <td>{{$nominee->description}}</td>
+                                    <td><p class="more">{{$nominee->description}}</p></td>
                                     <td>
                                         <a class="btn btn-info btn-sm" href="#modalComponet" data-toggle="modal"
                                             data-action="Edit" data-content="{{$nominee->toJson()}}">
@@ -123,6 +124,7 @@
     <script type="text/javascript">
         const $realUrl = "{{route('admin.nominees.store')}}"
     </script>
+    <script src="{{ asset('assets/js/readmore.js') }}"></script>
     <script type="text/javascript" src="{{asset('assets/js/jQuery.MultiFile.min.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/MultiFileUpload.js')}}"></script>
     <script type="text/javascript" src="{{asset('assets/js/nominee.modal.js')}}"></script>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @push('css')
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/select2.min.css')}}"> 
-    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datetimepicker.css')}}"> 
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/datetimepicker.css')}}">
 @endpush
 @section('content')
     <div class="container">
