@@ -10,9 +10,9 @@
                     <form action="{{route('front.vote.attempt')}}" method="post">
                         <h2 class="text-center">Sign in</h2>		
                         <div class="text-center social-btn">
-                            <a href="#" class="btn btn-danger btn-block"><i class="fa fa-google"></i> Sign in with <b>Google</b></a>
+                            <a href="#" class="btn btn-success btn-block"><i class="fa  fa-sign-in"></i> <b>JCIN TOYP</b> Voting System </a>
                         </div>
-                        <div class="or-seperator"><i>or</i></div>
+                        <div class="or-seperator"><i></i></div>
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="fa fa-user"></i></span>

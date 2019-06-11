@@ -60,6 +60,8 @@ class VotingController extends Controller
             ]);
         });
         
-        return redirect(route('front.elections.index'));
+        return redirect(route('front.elections.index'))->withSuccess(
+            __('Thank you for voting.')
+        );
     }
 }

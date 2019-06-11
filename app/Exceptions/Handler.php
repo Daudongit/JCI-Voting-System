@@ -136,7 +136,10 @@ class Handler extends ExceptionHandler
             return $this->prepareResponse($request,$e);
         }else{
             error_reporting(0);
-            return response()->view('errors.500', [], 500);
+            return response()->view(
+                'errors.500',['exception' => $e],
+                500,$e->getHeaders()
+            );
         }
     }
 }
