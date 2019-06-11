@@ -31,15 +31,19 @@ class ResultController extends Controller
     }
 
 
-    public function export($election,Slot $slot,$type = 'xls')
+    public function export(Election $election,Slot $slot,$type = 'xls')
     {
-        $nomineesResults = $slot->nomineesWithResultCount($election);
-        
-        $title = "jci_yearly_{$slot->position->name}_selection";
+        $nomineesResults = $slot->nomineesWithResultCount($election->id);
+
+        $positionName = str_slug($slot->position->name,'_');
+
+        $electionTitle = str_slug(strtolower($election->title),'_');
+
+        $title = $electionTitle.'_'.$positionName;
         
         return Excel::create($title, function($excel) use ($slot,$nomineesResults) {
 
-            $excel->sheet($slot->position->name, function($sheet) use ($nomineesResults)
+            $excel->sheet(str_limit($slot->position->name,26), function($sheet) use ($nomineesResults)
             {
                 $sheet->fromArray(
                     $this->transformCollection($nomineesResults->toArray())
