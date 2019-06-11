@@ -44,7 +44,7 @@ class VotingController extends Controller
         
         $results = array_map(function($selectedNominee,$position)use($election){
             return [
-                'voter_id'=>1,
+                'voter_id'=>auth('voter')->id(),
                 'position_id'=>$position,
                 'nominee_id'=>$selectedNominee,
                 'election_id'=>$election

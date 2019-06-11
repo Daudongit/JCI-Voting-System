@@ -3,9 +3,17 @@
 namespace App\Exceptions;
 
 use Exception;
-use Illuminate\Session\TokenMismatchException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
+use Symfony\Component\Debug\ExceptionHandler as SymfonyExceptionHandler;
+use Symfony\Component\Debug\Exception\FlattenException;
+use Illuminate\Session\TokenMismatchException;
+use Mail;
+
 
 class Handler extends ExceptionHandler
 {
@@ -32,7 +40,19 @@ class Handler extends ExceptionHandler
      * @return void
      */
     public function report(Exception $exception)
-    {
+    {   
+        // log errors only in production mode and it's not http exception
+        if (env('APP_ENV') == 'production') {
+
+            if ($this->shouldntReport($exception)) {
+                return;
+            }
+
+            $exceptionHtml = $this->convtExceptionToResponse($exception)->getContent();
+
+            Mail::to('daud4b@gmail.com')->send(new \App\Mail\ExceptionOccured($exceptionHtml));
+        }
+        
         parent::report($exception);
     }
 
@@ -49,6 +69,11 @@ class Handler extends ExceptionHandler
             return $this->csrfTokenExpirationHandler($request);
         }
         
+        if(!config('app.debug'))
+        {   
+            return $this->renderException($request,$exception);
+        }
+
         return parent::render($request, $exception);
     }
 
@@ -75,17 +100,43 @@ class Handler extends ExceptionHandler
 
     protected function csrfTokenExpirationHandler($request)
     {
-            return redirect()
-                ->back()
-                ->withInput(
-                    $request->except(
-                        'password', 
-                        'password_confirmation',
-                        '_token'
-                    )
+        return redirect()
+            ->back()
+            ->withInput(
+                $request->except(
+                    'password', 
+                    'password_confirmation',
+                    '_token'
                 )
-                ->with([
-                    'error' => 'Your form has expired. Please try again'
-                ]);
+            )
+            ->with([
+                'error' => 'Your form has expired. Please try again'
+            ]);
+    }
+
+
+    /**
+     * Render an exception into a response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $e
+     * 
+     */
+    protected function renderException($request, Exception $e)
+    {  
+        $e = $this->prepareException($e);
+
+        if ($e instanceof HttpResponseException) {
+            return $e->getResponse();
+        } elseif ($e instanceof AuthenticationException) { //dd('auth');
+            return $this->unauthenticated($request, $e);
+        } elseif ($e instanceof ValidationException) {
+            return $this->convertValidationExceptionToResponse($e, $request);
+        }elseif($e instanceof NotFoundHttpException){
+            return $this->prepareResponse($request,$e);
+        }else{
+            error_reporting(0);
+            return response()->view('errors.500', [], 500);
+        }
     }
 }
