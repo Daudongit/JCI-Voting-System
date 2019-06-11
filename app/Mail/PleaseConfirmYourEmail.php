@@ -37,7 +37,7 @@ class PleaseConfirmYourEmail extends Mailable
     {   
         $voter = $this->voter;
 
-        return $this->from('info@jci.com', 'JCIN TOYP')
+        return $this->from('jciorg@jci.org.ng', 'JCIN TOYP')
             ->subject('Please Confirm Your Email To Complete The Voting Process')
             ->markdown(
                 'emails.confirm_email',
