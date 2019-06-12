@@ -2,6 +2,7 @@
 
 return [
 
+    'enable_email_voting' => env('ENABLE_EMAIL_VOTING',false),
     /*
     |--------------------------------------------------------------------------
     | Application Name

@@ -109,7 +109,7 @@ class Handler extends ExceptionHandler
                     '_token'
                 )
             )
-            ->with([
+            ->withWarning([
                 'error' => 'Your form has expired. Please try again'
             ]);
     }

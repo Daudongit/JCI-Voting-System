@@ -18,7 +18,12 @@ class IsVotableMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {   
+    {  
+        if(!config('app.enable_email_voting'))
+        {
+            return $this->ipAddressOnly($request,$next);
+        } 
+
         if(filter_var($request->email, FILTER_VALIDATE_EMAIL) === false)
         {   
             return redirect(route('front.vote.login'))->withWarning(
@@ -58,9 +63,26 @@ class IsVotableMiddleware
 
         return Voter::create([
             'email'=>$request->email,
+            'ip'=>$request->ip(),
             'confirmation_token' => str_limit(
                 md5($request->email . str_random()), 25, ''
             )
         ]);
+    }
+
+    private function ipAddressOnly($request,$next)
+    {   
+        $dummyEmail = str_limit(
+            md5($request->ip() . str_random()), 25, ''
+        ).'@dummy.com';
+
+        Voter::create([
+            'email'=>$dummyEmail,
+            'ip' => $request->ip()
+        ]);
+        
+        $request->merge(['email'=>$dummyEmail]);
+
+        return $next($request);
     }
 }
