@@ -25,7 +25,7 @@
                             </p>
                         </div>
                         <ul class="list-group text-center">
-                            <li class="list-group-item"><i class="fa fa-check"></i>Number of Slot: {{$election->slots_count}}		                            </li>
+                            <li class="list-group-item"><i class="fa fa-check"></i>Number of Category: {{$election->slots_count}}		                            </li>
                             {{-- <li class="list-group-item"><i class="fa fa-check"></i>Votes count: {{$election->results_count}}		                            </li> --}}
                             <li class="list-group-item">
                                 <i class="fa fa-check"></i>
