@@ -15,7 +15,7 @@
                             </div>
                             <div class="or-seperator"><i></i></div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-block login-btn">Vote</button>
+                                <button type="submit" class="btn btn-success btn-block login-btn">Enter</button>
                             </div>
                         @else
                             <h2 class="text-center">Sign in</h2>		
