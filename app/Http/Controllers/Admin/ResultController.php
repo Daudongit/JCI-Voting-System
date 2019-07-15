@@ -35,19 +35,16 @@ class ResultController extends Controller
     {
         $nomineesResults = $slot->nomineesWithResultCount($election->id);
 
-        $positionName = str_slug($slot->position->name,'_');
-
-        $electionTitle = str_slug(strtolower($election->title),'_');
-
-        $title = $electionTitle.'_'.$positionName;
+        $title = $this->getCleanTitle($slot->position->name,$election->title);
         
         return Excel::create($title, function($excel) use ($slot,$nomineesResults) {
 
-            $excel->sheet(str_limit($slot->position->name,26), function($sheet) use ($nomineesResults)
-            {
-                $sheet->fromArray(
-                    $this->transformCollection($nomineesResults->toArray())
-                );
+            $excel->sheet(
+                str_limit($this->cleanSheetTitle($slot->position->name),26), 
+                function($sheet) use ($nomineesResults){
+                    $sheet->fromArray(
+                        $this->transformCollection($nomineesResults->toArray())
+                    );
             });
 
         })->download($type);
@@ -68,6 +65,28 @@ class ResultController extends Controller
             'Description'=>$item['description'],
             'Vote Count'=>$item['results_count']
         ];
+    }
+
+    private function getCleanTitle($position,$election)
+    {   
+        $positionName = str_slug($position,'_');
+
+        $electionTitle = str_slug(strtolower($election),'_');
+
+        $title = $electionTitle.'_'.$positionName;
+
+        $title = str_replace('/','-',$title);
+
+        return preg_replace('/[^A-Za-z0-9\-\_]/', '', $title); // only num, letter,- and _
+    }
+
+    private function cleanSheetTitle($title)
+    {
+        $title = str_slug($title,'_');
+
+        $title = str_replace('/','-',$title);
+
+        return preg_replace('/[^A-Za-z0-9\-\_]/', '', $title); // only num, letter,- and _
     }
 } 
 
