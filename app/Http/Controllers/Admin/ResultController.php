@@ -31,7 +31,7 @@ class ResultController extends Controller
     }
 
 
-    public function export(Election $election,Slot $slot,$type = 'xls')
+    public function exportElection(Election $election,Slot $slot,$type = 'xls')
     {
         $nomineesResults = $slot->nomineesWithResultCount($election->id);
 
@@ -43,7 +43,7 @@ class ResultController extends Controller
                 str_limit($this->cleanSheetTitle($slot->position->name),26), 
                 function($sheet) use ($nomineesResults){
                     $sheet->fromArray(
-                        $this->transformCollection($nomineesResults->toArray())
+                        $this->transformCollection($nomineesResults->toArray(),'election')
                     );
             });
 
@@ -51,19 +51,49 @@ class ResultController extends Controller
     }
 
     
-    //Helper to transform for excel output
-    private function transformCollection(array $items)
+    public function exportVote($type = 'xls')
     {
-        return array_map([$this,'transform'], $items);
+        $votes = Result::all();
+
+        return Excel::create(
+            str_slug(config('app.name', 'JCI Voting System')).'_votes', 
+            function($excel) use ($votes) {
+                $excel->sheet(
+                    'vote sheet', 
+                    function($sheet) use ($votes){
+                        $sheet->fromArray(
+                            $this->transformCollection($votes->toArray(),'vote')
+                        );
+                });
+
+            }
+        )->download($type);
     }
 
-    private function transform($item)
+
+    //Helper to transform for excel output
+    private function transformCollection(array $items,$entity)
+    {
+        return array_map([$this,$entity], $items);
+    }
+
+    private function election($item)
     {
         return [
             'id'=>$item['id'],
             'Nominee'=>$item['first_name'].' '.$item['last_name'],
             'Description'=>$item['description'],
             'Vote Count'=>$item['results_count']
+        ];
+    }
+
+    private function vote($item)
+    {
+        return [
+            'voter'=>$item['voter'],
+            'post'=>$item['post'],
+            'nominee'=>$item['nominee'],
+            'election'=>$item['election']
         ];
     }
 

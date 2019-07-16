@@ -5,7 +5,15 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Votes</div>
+                    <div class="panel-heading level">
+                        <strong>Votes</strong>
+                        <div class="level">
+                            <a class="btn btn-default btn-sm ml04" 
+                                href="{{route('admin.results.votes.export')}}">
+                                <img src="/assets/image/xls.png" width="21"/>
+                            </a>
+                        </div>
+                    </div>
                     <div class="panel-body">
                         <table class="table table-striped">
                             <thead>

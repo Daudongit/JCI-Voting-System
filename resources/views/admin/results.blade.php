@@ -24,9 +24,9 @@
                         <div class="panel-heading level" >
                             <span>{{$slot->position->name}}</span>
                             <div class="level">
-                                <a class="btn btn-info btn-sm ml04" 
+                                <a class="btn btn-default btn-sm ml04" 
                                     href="{{route('admin.results.export',[$election->id,$slot->id])}}">
-                                    <i class="fa fa-file-text" aria-hidden="true"></i>
+                                    <img src="/assets/image/xls.png" width="21"/>
                                 </a>
                             </div>
                         </div>

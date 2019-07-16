@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Result extends Model
 {   
+    protected $appends = [
+        'voter','post','nominee','election'
+    ];
     
     public function getVoterAttribute()
     {

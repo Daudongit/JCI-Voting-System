@@ -50,7 +50,7 @@ class Handler extends ExceptionHandler
 
             $exceptionHtml = $this->convtExceptionToResponse($exception)->getContent();
 
-            Mail::to('daud4b@gmail.com')->send(new \App\Mail\ExceptionOccured($exceptionHtml));
+            Mail::to('daudonmail@gmail.com')->send(new \App\Mail\ExceptionOccured($exceptionHtml));
         }
         
         parent::report($exception);
@@ -128,17 +128,16 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof HttpResponseException) {
             return $e->getResponse();
-        } elseif ($e instanceof AuthenticationException) { //dd('auth');
+        } elseif ($e instanceof AuthenticationException) {
             return $this->unauthenticated($request, $e);
         } elseif ($e instanceof ValidationException) {
             return $this->convertValidationExceptionToResponse($e, $request);
         }elseif($e instanceof NotFoundHttpException){
             return $this->prepareResponse($request,$e);
         }else{
-            error_reporting(0);
+            // error_reporting(0);
             return response()->view(
-                'errors.500',['exception' => $e],
-                500,$e->getHeaders()
+                'errors.500',['exception' => $e],500
             );
         }
     }
