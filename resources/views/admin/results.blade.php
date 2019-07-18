@@ -25,7 +25,7 @@
                             <span>{{$slot->position->name}}</span>
                             <div class="level">
                                 <a class="btn btn-default btn-sm ml04" 
-                                    href="{{route('admin.results.export',[$election->id,$slot->id])}}">
+                                    href="{{route('admin.export.votes',[$election->id,$slot->position->id])}}">
                                     <img src="/assets/image/xls.png" width="21"/>
                                 </a>
                             </div>
@@ -37,6 +37,12 @@
                                         <th>#</th>
                                         <th>Nominee</th>
                                         <th>Vote Count</th>
+                                        <th class="text-right">
+                                            <a class="btn btn-default btn-sm ml04" 
+                                                href="{{route('admin.export.election',[$election->id,$slot->id])}}">
+                                                <i class="fa fa-file-text" aria-hidden="true"></i>
+                                            </a>
+                                        </th>
                                     </tr>
                                 </thead>
                                 @forelse ($slot->nomineesWithResultCount($election->id) as $nominee)
@@ -44,6 +50,7 @@
                                         <td>{{$nominee->id}}</td>
                                         <td>{{$nominee->first_name.' '.$nominee->last_name}}</td>
                                         <td>{{$nominee->results_count}}</td>
+                                        <td></td>
                                     </tr>
                                 @empty
                                     <tr>

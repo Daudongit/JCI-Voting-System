@@ -64,7 +64,8 @@ class ResultController extends Controller
                         $sheet->fromArray(
                             $this->transformCollection($votes->toArray(),'vote')
                         );
-                });
+                    }
+                );
 
             }
         )->download($type);
