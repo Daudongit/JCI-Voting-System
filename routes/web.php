@@ -39,8 +39,8 @@ Route::group(['namespace'=>'Admin','prefix'=>'admin','middleware'=>'auth:web'],f
     Route::get('results','ResultController@index')->name('admin.results.index');
     Route::get('results/{election}','ResultController@show')->name('admin.results.show');
     //Route::get('export/{election}/{slot}/{type?}','ResultController@exportElection')->name('admin.results.export');
+    Route::get('export/vote/{election}/{position}/{type?}','ExportController@index')->name('admin.export.votes');
     Route::get('export/{election}/{slot}/{type?}','ExportController@show')->name('admin.export.election');
-    Route::get('export/{election}/{position}/{type?}','ExportController@index')->name('admin.export.votes');
     Route::resource('nominees','NomineeController',['as'=>'admin','except'=>['create','edit']]);
     Route::resource('elections','ElectionController',['as'=>'admin','except'=>['create','edit','show']]);
     Route::resource('positions','PositionController',['as'=>'admin','except'=>['create','edit']]);
