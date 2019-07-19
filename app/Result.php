@@ -7,12 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class Result extends Model
 {   
     protected $appends = [
-        'voter','post','nominee','election'
+        'voter','post','nominee','election','ip'
     ];
     
     public function getVoterAttribute()
     {
         return Voter::find($this->voter_id)->email;
+    }
+
+    public function getIpAttribute()
+    {
+        return Voter::find($this->voter_id)->ip;
     }
     
     public function getPostAttribute()

@@ -22,7 +22,6 @@ class ExportController extends Controller
             'election_id'=>$election->id,
             'position_id'=>$position->id
         ])->get();
-
         return Excel::create(
             $this->getCleanTitle($election->title,$position->name).'_votes',
             function($excel) use ($votes) {
@@ -79,6 +78,7 @@ class ExportController extends Controller
      {
          return [
              'voter'=>$item['voter'],
+             'voter_ip'=>$item['ip'],
              'post'=>$item['post'],
              'nominee'=>$item['nominee'],
              'election'=>$item['election']
