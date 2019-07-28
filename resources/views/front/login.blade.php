@@ -20,7 +20,7 @@
                         @else
                             <h2 class="text-center">Sign in</h2>		
                             <div class="text-center social-btn">
-                                <a href="#" class="btn btn-success btn-block"><i class="fa  fa-sign-in"></i> <b>JCIN TOYP</b> Voting System </a>
+                                <a href="#" class="btn btn-success btn-block"><i class="fa  fa-sign-in"></i> <b>{{config('app.name', 'JCI Voting System')}}</b> </a>
                             </div>
                             <div class="or-seperator"><i></i></div>
                             <div class="form-group">
