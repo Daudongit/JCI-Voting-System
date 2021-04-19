@@ -30,7 +30,7 @@
                                     </button>
                                 </form>
                                 @if ($loop->first)
-                                    <a class="btn btn-success btn-sm ml04" href="#modalComponet" 
+                                    <a class="btn btn-success btn-sm ml04 add-slot" href="#modalComponet" 
                                         data-toggle="modal" data-action="Create">
                                         <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                     </a>
@@ -55,7 +55,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="3">
-                                            <div class="text-center">No nominee has been found for this slot.</div>
+                                            <div class="text-center">No election slot found.</div>
                                         </td>
                                     </tr>
                                 @endforelse

@@ -65,16 +65,18 @@ class DBSeeder extends Seeder
     {   
         $this->positions->each(function($position){
             $this->voters->each(function($voter)use($position){
-
+                $electionId = rand(1,$this->count['election']);
+                $signature = factory(App\Signature::class)->create([
+                    'election_id'=>$electionId
+                ]);
                 return factory(App\Result::class)->create([
                     'voter_id'=>$voter->id,
                     'position_id'=>$position->id,
                     'nominee_id'=>function(){
                         return rand(1,$this->count['nominee']);
                     },
-                    'election_id'=>function(){
-                        return rand(1,$this->count['election']);
-                    }
+                    'election_id'=>$electionId,
+                    'signature_id'=>$signature->id
                 ]);
             });
         });

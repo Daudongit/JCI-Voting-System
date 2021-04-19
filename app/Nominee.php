@@ -22,4 +22,14 @@ class Nominee extends Model
         return $this->hasMany(Result::class);
     }
 
+    public function scopeFilter($query,$keywords)
+    {   
+        if($keywords)
+        {   
+            return $query->where('first_name','like',"%".$keywords."%")
+                   ->orWhere('last_name','like',"%".$keywords."%")
+                   ->orWhere('description','like',"%".$keywords."%");
+        }
+        return $query;
+    }
 }

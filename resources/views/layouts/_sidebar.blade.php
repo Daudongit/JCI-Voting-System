@@ -5,16 +5,16 @@
             <a href="{{ route('admin.dashboard') }}">Dashboard</a>
         </li>
         <li class="{{ active(route('admin.nominees.index'))}}">
-            <a href="{{ route('admin.nominees.index') }}">Nominee</a>
+            <a href="{{ route('admin.nominees.index') }}">Candidate</a>
         </li>
         <li class="{{ active(route('admin.positions.index'))}}">
-            <a href="{{ route('admin.positions.index') }}">Category</a>
+            <a href="{{ route('admin.positions.index') }}">Available Office</a>
         </li>
         <li class="{{active(route('admin.slots.index'))}}">
             <a href="{{ route('admin.slots.index') }}">Slot</a>
         </li>
         <li class="{{active(route('admin.elections.index'))}}">
-            <a href="{{ route('admin.elections.index') }}">Year</a>
+            <a href="{{ route('admin.elections.index') }}">Session/Year</a>
         </li>
         <li class="{{active(route('admin.results.index'))}}">
             <a href="{{ route('admin.results.index') }}">Vote</a>

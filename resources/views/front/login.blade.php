@@ -9,6 +9,7 @@
                 <div class="login-form">
                     <form action="{{route('front.vote.attempt')}}" method="post">
                         {{ csrf_field() }}
+                        <input type="hidden" name="signature" id="signature" value="{{request()->ip()}}">
                         @if (config('app.enable_email_voting') == false)
                             <div class="text-center social-btn">
                                 <a href="#" class="btn btn-success btn-block"><i class="fa  fa-sign-in"></i> <b>{{config('app.name', 'JCI Voting System')}}</b>  </a>
@@ -39,3 +40,8 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script src="{{ asset('assets/js/browser-signature.umd.js') }}"></script>
+    <script>const signature = browserSignature();</script>
+    <script src="{{ asset('assets/js/signature.js') }}"></script>
+@endpush

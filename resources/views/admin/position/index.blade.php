@@ -1,11 +1,13 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
+        @component('components.search-form',
+            ['route'=>route('admin.positions.index'),'col'=>'col-md-8 col-md-offset-2']
+        )@endcomponent
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Nominee Possible Category</div>
+                    <div class="panel-heading">Candidate Possible Office</div>
                     <div class="panel-body">
                         <table class="table table-striped">
                             <thead>
@@ -61,7 +63,7 @@
                             @empty
                                 <tr>
                                     <td colspan="4">
-                                        <div class="text-center">No nominee post has been found. Try to add one</div>
+                                        <div class="text-center">No office found yet. Try to add one</div>
                                     </td>
                                     <td>
                                         <a class="btn btn-success btn-sm" href="#modalComponet" 

@@ -17,7 +17,7 @@ class NomineeController extends Controller
      */
     public function index()
     {   
-        $nominees = Nominee::paginate(20);
+        $nominees = Nominee::filter(request('keywords'))->paginate(20);
 
         return view('admin.nominee.index',compact('nominees'));
     }

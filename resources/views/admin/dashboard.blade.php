@@ -12,8 +12,8 @@
                             <div class="m-b-md">
                                 <i class="fa fa-users fa-4x"></i>
                                 <h1 class="m-xs">{{$nomineeCount}}</h1>
-                                <h3 class="font-bold no-margins">Nominees</h3>
-                                <small>Number of Nominee</small>
+                                <h3 class="font-bold no-margins">Candidates</h3>
+                                <small>Number of candidate</small>
                             </div>
                         </div>
                     </div>
@@ -32,8 +32,8 @@
                             <div class="m-b-md">
                                 <i class="fa fa-pencil-square-o fa-4x"></i>
                                 <h1 class="m-xs">{{$postCount}}</h1>
-                                <h3 class="font-bold no-margins">Category</h3>
-                                <small>Number of category for nominee</small>
+                                <h3 class="font-bold no-margins">Offices</h3>
+                                <small>Number of office for candidate</small>
                             </div>
                         </div>
                     </div>

@@ -5,6 +5,9 @@
 @endpush
 @section('content')
     <div class="container">
+        @component('components.search-form',
+            ['route'=>route('admin.nominees.index'),'col'=>'col-md-12']
+        )@endcomponent
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -65,7 +68,7 @@
                             @empty
                                 <tr>
                                     <td colspan="5">
-                                        <div class="text-center">No nominee has been found. Try to add one </div>
+                                        <div class="text-center">No candidate has been found. Try to add one </div>
                                     </td>
                                     <td>
                                         <a class="btn btn-success btn-sm" href="#modalComponet" 

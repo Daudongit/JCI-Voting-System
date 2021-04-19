@@ -21,7 +21,7 @@ class ExportController extends Controller
         $votes = Result::where([
             'election_id'=>$election->id,
             'position_id'=>$position->id
-        ])->get();
+        ])->with('signature')->get();
 
         return Excel::create(
             $this->getCleanTitle($election->title,$position->name).'_votes',
@@ -79,7 +79,7 @@ class ExportController extends Controller
      {
          return [
              'voter'=>$item['voter'],
-             //'voter_ip'=>$item['ip'],
+             'voter_ip'=>$item['signature']['ip'],
              'post'=>$item['post'],
              'nominee'=>$item['nominee'],
              'election'=>$item['election']

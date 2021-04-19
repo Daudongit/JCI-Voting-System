@@ -15,7 +15,7 @@ class PositionController extends Controller
      */
     public function index()
     {   
-        $positions = Position::paginate(20);
+        $positions = Position::filter(request('keywords'))->paginate(20);
 
         return view('admin.position.index',compact('positions'));
     }

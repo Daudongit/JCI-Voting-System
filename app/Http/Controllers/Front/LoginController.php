@@ -31,17 +31,14 @@ class LoginController extends Controller
 
     public function loginAttempt(Request $request)
     {   
-        // $this->validate($request, [
-        //     $this->username() => 'required|email',
-        // ]);
-
         $findUser = Voter::whereEmail($request->email)->first();
         
         Auth::guard('voter')->login($findUser);
         
         request()->session()->regenerate();
-
+        session()->put('sign',$request->signature);
         return redirect(route('front.elections.index'));
+            // ->with(['signature'=>$request->signature]);
     }
 
     public function logout(Request $request)

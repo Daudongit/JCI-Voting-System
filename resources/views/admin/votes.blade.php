@@ -2,17 +2,15 @@
 
 @section('content')
     <div class="container">
+        @component('components.search-form',
+            ['route'=>route('admin.results.index'),'col'=>'col-md-12']
+        )@endcomponent
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading level">
-                        <strong>Votes</strong>
-                        <div class="level">
-                            <a class="btn btn-default btn-sm ml04" 
-                                href="{{route('admin.results.votes.export')}}">
-                                <img src="/assets/image/xls.png" width="21"/>
-                            </a>
-                        </div>
+                        <strong>Election Votes</strong>
+                        <div class="level"></div>
                     </div>
                     <div class="panel-body">
                         <table class="table table-striped">
@@ -20,9 +18,9 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Voter</th>
-                                    <th>Post</th>
-                                    <th>Nominee</th>
-                                    <th>Election</th>
+                                    <th>Office</th>
+                                    <th>Canditate</th>
+                                    <th>Session/Election</th>
                                 </tr>
                             </thead>
                             @forelse ($results as $result)

@@ -67,6 +67,9 @@ $factory->define(App\Result::class,function(Faker\Generator $faker){
         },
         'election_id'=>function(){
             return factory(App\Election::class)->create()->id;
+        },
+        'signature_id'=>function(){
+            return factory(App\Signature::class)->create()->id;
         }
     ];
 });
@@ -83,5 +86,15 @@ $factory->define(App\Slot::class,function(Faker\Generator $faker){
         'position_id'=>function(){
             return factory(App\Position::class)->create()->id;
         },
+    ];
+});
+
+$factory->define(App\Signature::class,function(Faker\Generator $faker){
+    return [
+        'ip'=>$faker->unique()->ipv4,
+        'election_id'=>function(){
+            return factory(App\Election::class)->create()->id;
+        },
+        'browser_signature'=>$faker->word.''.time()
     ];
 });

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIpvalidationTable extends Migration
+class CreateSignatureTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateIpvalidationTable extends Migration
      */
     public function up()
     {
-        Schema::create('ipvalidations', function (Blueprint $table) {
+        Schema::create('signatures', function (Blueprint $table) {
             $table->increments('id');
             $table->string('ip');
+            $table->string('browser_signature');
             $table->integer('election_id')->unsigned();
             $table->timestamps();
         });
@@ -28,6 +29,6 @@ class CreateIpvalidationTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ipvalidations');
+        Schema::dropIfExists('signatures');
     }
 }

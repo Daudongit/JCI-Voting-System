@@ -27,4 +27,9 @@ class Position extends Model
     {
         return $this->belongToMany(Slot::class);
     }
+
+    public function scopeFilter($query,$keywords)
+    {   
+        return $keywords?$query->where('name','like',"%".$keywords."%"):$query;
+    } 
 }

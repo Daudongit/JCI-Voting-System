@@ -17,7 +17,7 @@ class ResultController extends Controller
      */
     public function index()
     {   
-        $results = Result::paginate(20);
+        $results = Result::filter(request('keywords'))->paginate(20);
 
         return view('admin.votes',compact('results'));
     }
@@ -53,7 +53,7 @@ class ResultController extends Controller
     
     public function exportVote($type = 'xls')
     {
-        $votes = Result::all();
+        $votes = Result::with('signature')->get();
 
         return Excel::create(
             str_slug(config('app.name', 'JCI Voting System')).'_votes', 
@@ -92,6 +92,7 @@ class ResultController extends Controller
     {
         return [
             'voter'=>$item['voter'],
+            'voter_ip'=>$item['signature']['ip'],
             'post'=>$item['post'],
             'nominee'=>$item['nominee'],
             'election'=>$item['election']

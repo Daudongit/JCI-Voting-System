@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -55,7 +54,7 @@
                                 @empty
                                     <tr>
                                         <td colspan="3">
-                                            <div class="text-center">No nominee has been found for this slot.</div>
+                                            <div class="text-center">No election result found.</div>
                                         </td>
                                     </tr>
                                 @endforelse

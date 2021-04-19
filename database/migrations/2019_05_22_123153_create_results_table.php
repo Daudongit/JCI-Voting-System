@@ -19,8 +19,9 @@ class CreateResultsTable extends Migration
             $table->integer('position_id')->unsigned();
             $table->integer('nominee_id')->unsigned();
             $table->integer('election_id')->unsigned();
+            $table->string('signature_id');
             $table->timestamps();
-
+            $table->unique(['voter_id', 'position_id','election_id'],'uqe_vote');
             // $table->foreign('election_id')
             //       ->references('id')
             //       ->on('election')

@@ -15,7 +15,8 @@
                             @foreach ($election->slots as $slot)
                                 <li id="default-title-{{$loop->index}}" 
                                     class="{{$loop->index == 0?'current-step':''}}">
-                                    <div>{{str_limit($slot->position->name,5)}}</div>
+                                    {{-- <div>{{str_limit($slot->position->name,5)}}</div> --}}
+                                    <div>{{substr($slot->position->name,0,3)}}</div>
                                 </li>
                             @endforeach
                         </ul>
@@ -26,8 +27,9 @@
                     <form method="POST" action="{{route('front.vote.store',$election->id)}}" id="default">
                         {{csrf_field()}}
                         <input type="hidden" name="election" value="{{$election->id}}">
+                        <input type="hidden" name="signature" id="signature" value="{{request()->ip()}}">
                         @foreach ($election->slots as $slot)
-                            <fieldset title="{{str_limit($slot->position->name,5)}}" 
+                            <fieldset title="{{substr($slot->position->name,0,3)}}" 
                                 class="step" id="default-step-{{$loop->index}}">
                                 <legend> </legend>
                                 <div class="panel panel-primary">
@@ -37,6 +39,9 @@
                                             Vote your choice for <b>{{ $slot->position->name }}</b> position
                                         </h3>
                                     </div>
+                                </div>
+                                <div class="alert alert-danger text-center hidden">
+                                    <h4>Please select your candidate of choice and click next below</h4>
                                 </div>
                                 <div class="panel-body">
                                     <ul class="list-group">
@@ -57,7 +62,7 @@
                                                 <div class="fb-status-container fb-border">
                                                     <div class="fb-time-action">
                                                         <input value="{{ $nominee->id }}" type="radio" 
-                                                            name="{{$slot->position->id}}">
+                                                            name="{{$slot->position->id}}" required>
                                                         <span>-</span>
                                                             Click to vote for <b>{{$nominee->first_name.' '.$nominee->last_name}}</b>
                                                         <span>-</span>
@@ -81,7 +86,11 @@
 </div>
 @endsection
 @push('js')
+    <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.stepy.js') }}"></script>
     <script src="{{ asset('assets/js/stepy_form_wizard_init.js') }}"></script>
+    <script src="{{ asset('assets/js/browser-signature.umd.js') }}"></script>
     <script src="{{ asset('assets/js/readmore.js') }}"></script>
+    <script>const signature = browserSignature();</script>
+    <script src="{{ asset('assets/js/signature.js') }}"></script>
 @endpush

@@ -1,16 +1,18 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row">
         <div class="col-md-12">
+            @php
+                $class = count($elections)>1?'col-md-4':'col-md-6 col-md-offset-3';
+            @endphp
             @forelse ($elections as $election)
                 <!-- item -->
-                <div class="col-md-4 text-center">
+                <div class="{{$class}} text-center">
                     <div class="panel panel-info panel-pricing">
                         <div class="panel-heading">
                             <i class="fa fa-sitemap"></i>
-                            <h4>{{str_limit($election->title,35)}}</h4>
+                            <h4>{{str_limit($election->title,30)}}</h4>
                         </div>
                         <div class="panel-body text-center">
                             <p>Start Date:
@@ -48,6 +50,17 @@
                                 {{$election->isRunning() && !$election->isEnd()?'':'disabled'}}>
                                 ...<b>Vote</b>...
                             </button> 
+                            {{-- <form action="{{route('front.vote.show',$election->id)}}" method="POST" 
+                                target="_blank" id="vote_{{$election->id}}">
+                                {{ csrf_field() }}
+                                <input type="hidden" name="signature" value="{{$signature}}">
+                                <button type="submit" class="btn btn-info btn-md"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('vote_{{$election->id}}').submit();"
+                                    {{$election->isRunning() && !$election->isEnd()?'':'disabled'}}>
+                                    ...<b>Vote</b>...
+                                </button>
+                            </form> --}}
                         </div>
                     </div>
                 </div>

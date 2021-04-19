@@ -32,7 +32,7 @@
  *
  */
 
-;(function($) {
+ ;(function($) {
 
 	var methods = {
 		init: function(options) {
@@ -284,7 +284,7 @@
 				isValid		= true,
 				$title		= $('#' + this.attr('id') + '-titles').children().eq(index),
 				opt			= this.data('options'),
-				$validate	= this.validate();
+				$validate	= this.validate(opt.validateOptions);
 
 			$($step.find(':input:enabled').get().reverse()).each(function() {
 				var fieldIsValid = $validate.element($(this));
@@ -337,7 +337,8 @@
 		titleClick:		false,
 		titleTarget:	undefined,
 		validate:		false,
-		select: 		undefined
+		select: 		undefined,
+		validateOptions:{}
 	};
 
 })(jQuery);
