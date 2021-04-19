@@ -67,7 +67,7 @@
                         <div class="panel-heading level">
                             No election slot has been found.
                             <div class="level">
-                                <a class="btn btn-success btn-sm" href="#modalComponet" 
+                                <a class="btn btn-success btn-sm add-slot" href="#modalComponet" 
                                     data-toggle="modal" data-action="Create">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
                                 </a>
