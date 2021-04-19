@@ -5,10 +5,10 @@
             <a href="{{ route('admin.dashboard') }}">Dashboard</a>
         </li>
         <li class="{{ active(route('admin.nominees.index'))}}">
-            <a href="{{ route('admin.nominees.index') }}">Candidate</a>
+            <a href="{{ route('admin.nominees.index') }}">Honoree</a>
         </li>
         <li class="{{ active(route('admin.positions.index'))}}">
-            <a href="{{ route('admin.positions.index') }}">Available Office</a>
+            <a href="{{ route('admin.positions.index') }}">Category</a>
         </li>
         <li class="{{active(route('admin.slots.index'))}}">
             <a href="{{ route('admin.slots.index') }}">Slot</a>

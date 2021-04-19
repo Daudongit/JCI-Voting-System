@@ -25,7 +25,7 @@ class Position extends Model
 
     public function slots()
     {
-        return $this->belongToMany(Slot::class);
+        return $this->hasMany(Slot::class);
     }
 
     public function scopeFilter($query,$keywords)
