@@ -233,4 +233,7 @@ return [
 
     ],
 
+    'og_title'=>env('OPEN_GRAPH_TITLE','JCI Voting System'),
+    'og_title'=>env('OPEN_GRAPH_DESCRIPTION','An E-voting platform for Jci'),
+    'og_image'=>env('OPEN_GRAPH_IMAGE','assets/image/jcing.jpg'),
 ];

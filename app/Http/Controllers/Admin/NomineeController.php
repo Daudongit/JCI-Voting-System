@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Nominee;
 use Illuminate\Http\Request;
-use App\Services\FileUploadService;
+use App\Services\ImageProcess;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NomineeRequest;
 
@@ -26,21 +26,16 @@ class NomineeController extends Controller
      * Store a newly created resource in storage.
      *  
      * @param  \App\Http\Requests\NomineeRequest  $request
-     * @param \App\Services\FileUploadservice $fileUploadService
+     * @param \App\Services\ImageProcess $fileUploadService
      * @return \Illuminate\Http\Response
      */
-    public function store(NomineeRequest $request,FileUploadService $fileUploadService)
+    public function store(NomineeRequest $request,ImageProcess $fileUploadService)
     {
         $rawNomineee = $request->except(['_token','previousImage','image']);
 
         if ($request->hasfile('image')) {
-            $uploadResponce = $fileUploadService->uploadFile(
-                $request->file('image'),
-                ["width"=>200, "height"=>200]
-            );
 
-            $rawNomineee['image'] = $uploadResponce['secure_url'].'|'.
-                $uploadResponce['public_id'];
+            $rawNomineee['image'] = $fileUploadService->upload('image');
         }
 
         Nominee::create($rawNomineee);
@@ -60,23 +55,18 @@ class NomineeController extends Controller
      */
     public function update(NomineeRequest $request, Nominee $nominee)
     {  
-        $fileUploadService = app(FileUploadService::class);
+        $fileUploadService = app(ImageProcess::class);
 
         $rawNomineee = $request->except(['_token','previousImage','image']);
+        
+        if(!$request->has('previousImage'))
+        {
+            $fileUploadService->delete($nominee->image);
 
-        if($request->hasFile('image')) {
-            $uploadResponce = $fileUploadService->uploadFile(
-                $request->image,
-                ["width"=>200, "height"=>200]
-            );
-
-            $this->deleteImage($fileUploadService,$nominee);
-
-            $rawNomineee['image'] = $uploadResponce['secure_url'].'|'.
-                $uploadResponce['public_id'];
+            $rawNomineee['image'] = $fileUploadService->upload('image');
         }
-            
-        $nominee->update($rawNomineee);
+
+        $nominee->fill($rawNomineee)->save();
 
         return redirect(route('admin.nominees.index'))->withSuccess(
             __('Nominee successfully updated.')
@@ -85,28 +75,17 @@ class NomineeController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * @param \App\Services\FileUploadservice $fileUploadService
+     * @param \App\Services\ImageProcess $fileUploadService
      * @param  \App\Nominee  $nominee
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FileUploadService $fileUploadService, Nominee $nominee)
+    public function destroy(ImageProcess $fileUploadService, Nominee $nominee)
     {
+        $fileUploadService->delete($nominee->image);
         if($nominee->delete())
         {
-            $this->deleteImage($fileUploadService,$nominee);
-
             return redirect(route('admin.nominees.index'))->withSuccess(
                 __('Nominee successfully deleted.')
-            );
-        }
-    }
-
-    private function deleteImage($fileUploadService,$nominee)
-    {
-        if(!is_null($nominee->image)) {
-            $fileUploadService->deleteFile(
-                isset(explode('|',$nominee->image)[1])?
-                explode('|',$nominee->image)[1]:null
             );
         }
     }

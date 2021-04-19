@@ -7,7 +7,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    @include('layouts._opengraph')
     <title>{{ config('app.name', 'JCI Voting System') }}</title>
 
     <!-- Styles -->
