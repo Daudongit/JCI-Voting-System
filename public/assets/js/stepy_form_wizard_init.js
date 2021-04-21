@@ -13,18 +13,18 @@ $(function() {
                 scrollTop: 0
             }, 500); 
         },
-        validate:true,
-        validateOptions:{
-            errorPlacement: function(error, element) {},
-            highlight: function(element, errorClass) {
-                $('.alert').removeClass('hidden');
-                $('.alert').fadeOut(1000,function() {
-                    $('.alert').fadeIn();
-                });
-            },
-            unhighlight: function(element, errorClass) {
-                $('.alert').addClass('hidden');
-            }
-        }
+        validate:false,
+        // validateOptions:{
+        //     errorPlacement: function(error, element) {},
+        //     highlight: function(element, errorClass) {
+        //         $('.alert').removeClass('hidden');
+        //         $('.alert').fadeOut(1000,function() {
+        //             $('.alert').fadeIn();
+        //         });
+        //     },
+        //     unhighlight: function(element, errorClass) {
+        //         $('.alert').addClass('hidden');
+        //     }
+        // }
     });
 });

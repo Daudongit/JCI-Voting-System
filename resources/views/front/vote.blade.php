@@ -62,7 +62,8 @@
                                                 <div class="fb-status-container fb-border">
                                                     <div class="fb-time-action">
                                                         <input value="{{ $nominee->id }}" type="radio" 
-                                                            name="{{$slot->position->id}}" required>
+                                                            name="{{$slot->position->id}}" >
+                                                            {{-- required> --}}
                                                         <span>-</span>
                                                             Click to vote for <b>{{$nominee->first_name.' '.$nominee->last_name}}</b>
                                                         <span>-</span>
@@ -86,7 +87,7 @@
 </div>
 @endsection
 @push('js')
-    <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/jquery.validate.min.js') }}"></script> --}}
     <script src="{{ asset('assets/js/jquery.stepy.js') }}"></script>
     <script src="{{ asset('assets/js/stepy_form_wizard_init.js') }}"></script>
     <script src="{{ asset('assets/js/browser-signature.umd.js') }}"></script>
