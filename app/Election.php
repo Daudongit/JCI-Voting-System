@@ -8,6 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Election extends Model
 {
+     /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($election) {
+            $election->results->each->delete();
+        });
+    }
     
     protected $dates = ['start','end'];
 

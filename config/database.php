@@ -52,6 +52,7 @@ return [
             'prefix' => '',
             'strict' => true,
             'engine' => null,
+            // 'engine' => 'InnoDB',
             'modes'  => [
                 'ONLY_FULL_GROUP_BY',
                 'STRICT_TRANS_TABLES',

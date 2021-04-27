@@ -48,9 +48,10 @@ class Handler extends ExceptionHandler
                 return;
             }
 
-            $exceptionHtml = $this->convtExceptionToResponse($exception)->getContent();
+            //I think this line work in php 5.6
+            // $exceptionHtml = $this->convtExceptionToResponse($exception)->getContent();
 
-            Mail::to('daudonmail@gmail.com')->send(new \App\Mail\ExceptionOccured($exceptionHtml));
+            // Mail::to('daudonmail@gmail.com')->send(new \App\Mail\ExceptionOccured($exceptionHtml));
         }
         
         parent::report($exception);

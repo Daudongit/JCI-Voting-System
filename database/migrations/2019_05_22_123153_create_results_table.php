@@ -22,25 +22,6 @@ class CreateResultsTable extends Migration
             $table->string('signature_id');
             $table->timestamps();
             $table->unique(['voter_id', 'position_id','election_id'],'uqe_vote');
-            // $table->foreign('election_id')
-            //       ->references('id')
-            //       ->on('election')
-            //       ->onDelete('cascade');
-
-            // $table->foreign('position_id')
-            //       ->references('id')
-            //       ->on('position')
-            //       ->onDelete('cascade');                      
-
-            // $table->foreign('voter_id')
-            //       ->references('id')
-            //       ->on('voter')
-            //       ->onDelete('cascade');
-
-            // $table->foreign('nominee_id')
-            //       ->references('id')
-            //       ->on('nominee')
-            //       ->onDelete('cascade');
         });
     }
 

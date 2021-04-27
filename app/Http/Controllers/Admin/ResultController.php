@@ -18,7 +18,7 @@ class ResultController extends Controller
     public function index()
     {   
         $results = Result::filter(request('keywords'))->paginate(20);
-
+        // dd($results);
         return view('admin.votes',compact('results'));
     }
 

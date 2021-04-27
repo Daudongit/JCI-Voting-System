@@ -11,7 +11,7 @@
                         <div class="panel-heading level">
                                 {{$slot->id}} <span>{{$slot->position->name}}</span>
                             <div class="level">
-                                <a class="btn btn-info btn-sm" href="#modalComponet" 
+                                <a class="btn btn-info btn-sm edit-slot" href="#modalComponet" 
                                     data-toggle="modal" data-action="Edit" 
                                     data-content="{{$slot->toJson()}}">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
