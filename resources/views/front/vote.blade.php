@@ -50,8 +50,10 @@
                                                 <div class="fb-user-thumb">
                                                     {{-- <img src="https://randomuser.me/api/portraits/men/{{$loop->index+1}}.jpg" alt=""> --}}
                                                     <img 
-                                                        src="{{is_null($nominee->image)?'/assets/image/no_image.jpg':explode('|',$nominee->image)[0]}}" 
+                                                        {{-- src="{{is_null($nominee->image)?'/assets/image/no_image.jpg':explode('|',$nominee->image)[0]}}"  --}}
+                                                        src="{{is_null($nominee->image)?'/assets/image/no_image.jpg':'/storage/upload/'.$nominee->image}}" 
                                                         alt="{{$nominee->first_name}}">
+                                                        
                                                 </div>
                                                 <div class="fb-user-details">
                                                     <h3><a href="#" class="#">{{$nominee->first_name.' '.$nominee->last_name}}</a></h3>
